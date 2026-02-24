@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chatbots – Sind sie eine Gefahr oder eine Gute Idee?</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:linear-gradient(135deg,#0f172a,#1e293b,#0f172a);
+color:white;
+overflow-x:hidden;
+}
+
+/* HERO */
+.hero{
+min-height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:40px;
+}
+
+.hero h1{
+font-size:3.2rem;
+max-width:900px;
+background:linear-gradient(90deg,#00f5ff,#a855f7);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:30px;
+}
+
+.hero p{
+max-width:700px;
+opacity:0.8;
+margin-bottom:40px;
+font-size:1.1rem;
+line-height:1.6;
+}
+
+.hero button{
+padding:15px 40px;
+font-size:1rem;
+border:none;
+border-radius:40px;
+cursor:pointer;
+background:linear-gradient(90deg,#00f5ff,#a855f7);
+color:white;
+transition:0.3s;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.hero button:hover{
+transform:scale(1.05);
+}
+
+/* CONTENT */
+.content{
+max-width:1200px;
+margin:auto;
+padding:100px 40px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:40px;
+border-radius:25px;
+backdrop-filter:blur(15px);
+line-height:1.8;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+background:rgba(255,255,255,0.1);
+}
+
+.card h2{
+margin-bottom:20px;
+}
+
+/* CHAT SECTION */
+.chat-section{
+padding:120px 20px;
+display:flex;
+justify-content:center;
+}
+
+.chat-container{
+width:100%;
+max-width:800px;
+height:600px;
+background:rgba(255,255,255,0.05);
+border-radius:30px;
+backdrop-filter:blur(15px);
+display:flex;
+flex-direction:column;
+padding:30px;
+}
+
+.chat-header{
+text-align:center;
+font-size:1.4rem;
+margin-bottom:20px;
+}
+
+.chat-messages{
+flex:1;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+gap:15px;
+padding:10px;
+}
+
+.bubble{
+padding:14px 20px;
+border-radius:25px;
+max-width:70%;
+word-wrap:break-word;
+font-size:0.95rem;
+}
+
+.user{
+align-self:flex-end;
+background:#25D366;
+color:black;
+border-bottom-right-radius:8px;
+}
+
+.bot{
+align-self:flex-start;
+background:#334155;
+border-bottom-left-radius:8px;
+}
+
+.input-area{
+display:flex;
+gap:15px;
+margin-top:20px;
+}
+
+input{
+flex:1;
+padding:14px;
+border-radius:30px;
+border:none;
+outline:none;
+font-size:0.95rem;
+}
+
+button.send{
+padding:14px 25px;
+border-radius:30px;
+border:none;
+background:linear-gradient(90deg,#00f5ff,#a855f7);
+color:white;
+cursor:pointer;
+}
+
+/* Responsive */
+@media(max-width:900px){
+.content{
+grid-template-columns:1fr;
+}
+.hero h1{
+font-size:2.3rem;
+}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+<h1>Chatbots – Sind sie eine Gefahr oder eine Gute Idee?</h1>
+<p>
+Chatbots verändern unsere Welt. Sie helfen im Alltag, in Unternehmen,
+in der Medizin und Bildung – doch gleichzeitig werfen sie ethische,
+wirtschaftliche und gesellschaftliche Fragen auf.
+</p>
+<button onclick="document.getElementById('chat').scrollIntoView()">Custom Chatbot</button>
+</section>
+
+<section class="content">
+<div class="card">
+<h2>⚠ Risiken & Kritik</h2>
+<ul>
+<li>Datenschutz & Überwachung</li>
+<li>Fake News & Manipulation</li>
+<li>Arbeitsplätze werden automatisiert</li>
+<li>Algorithmische Voreingenommenheit</li>
+<li>Abhängigkeit von Technologie</li>
+<li>Missbrauch durch Cyberkriminalität</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>✅ Chancen & Potenzial</h2>
+<ul>
+<li>24/7 Support weltweit</li>
+<li>Effizienzsteigerung in Firmen</li>
+<li>Individuelle Lernunterstützung</li>
+<li>Barrierefreiheit für Menschen mit Behinderung</li>
+<li>Schnelle medizinische Ersteinschätzung</li>
+<li>Produktivitätssteigerung</li>
+</ul>
+</div>
+</section>
+
+<section class="chat-section" id="chat">
+<div class="chat-container">
+<div class="chat-header">🤖 Custom Chatbot</div>
+<div class="chat-messages" id="chatMessages"></div>
+
+<div class="input-area">
+<input type="text" id="messageInput" placeholder="Nachricht schreiben...">
+<button class="send" onclick="sendMessage()">Senden</button>
+</div>
+</div>
+</section>
+
+<script>
+async function sendMessage(){
+const input=document.getElementById("messageInput");
+const chat=document.getElementById("chatMessages");
+const message=input.value.trim();
+if(!message)return;
+
+chat.innerHTML+=`<div class="bubble user">${message}</div>`;
+input.value="";
+chat.scrollTop=chat.scrollHeight;
+
+const response=await fetch("/.netlify/functions/chat",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({message})
+});
+
+const data=await response.json();
+chat.innerHTML+=`<div class="bubble bot">${data.reply}</div>`;
+chat.scrollTop=chat.scrollHeight;
+}
+</script>
+
+</body>
+</html>
